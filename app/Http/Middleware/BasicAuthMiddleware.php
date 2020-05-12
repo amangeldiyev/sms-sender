@@ -15,7 +15,7 @@ class BasicAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->getUser() != 'admin' || $request->getPassword() != 'password') {
+        if ($request->getUser() != env('AUTH_LOGIN') || $request->getPassword() != env('AUTH_PASSWORD')) {
             $headers = array('WWW-Authenticate' => 'Basic');
             return response('Unauthorized', 401, $headers);
         }
