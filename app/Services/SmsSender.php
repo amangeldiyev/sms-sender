@@ -31,6 +31,7 @@ class SmsSender
                     "callback_url" => null
                 ]);
 
+            Log::info($response->json());
             Log::info($text . ' - Sent to: ' . $this->normalizePhone($phone));
 
             return $response->json()['message_id'];
