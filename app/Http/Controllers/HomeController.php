@@ -28,7 +28,7 @@ class HomeController extends Controller
             ]);
 
             $sender = new SmsSender();
-            $sender->log($request->text, $request->phone);
+            $sender->send($request->text, $request->phone);
 
             return view('form')->with('msg', 'Message sent successfully!');
         }
