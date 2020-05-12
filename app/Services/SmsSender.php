@@ -30,6 +30,8 @@ class SmsSender
                     "schedule_time" => null,
                     "callback_url" => null
                 ]);
+            
+                self::log($text, $phone);
 
             return $response->json()['message_id'];
 
@@ -48,7 +50,7 @@ class SmsSender
      * @param  string $phone
      * @return void
      */
-    public function log($text, $phone)
+    public static function log($text, $phone)
     {
         Log::info($text . ' - Sent to: ' . $this->normalizePhone($phone));
     }
