@@ -50,8 +50,22 @@ class HomeController extends Controller
             abort(400);
         }
 
-        if ($status == 'D') {
-            $status = 'Delivered';
+        switch ($status) {
+            case 'D':
+                $status = 'DELIVERED';
+                break;
+            case 'S':
+                $status = 'SENT';
+                break;
+            case 'E':
+                $status = 'EXPIRED';
+                break;
+            case 'U':
+                $status = 'UNDELIVERABLE';
+                break;
+            case 'R':
+                $status = 'REJECTED';
+                break;
         }
 
         return response()->json([
