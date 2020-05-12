@@ -31,11 +31,13 @@ class SmsSender
                     "callback_url" => null
                 ]);
 
-            Log::info($response->json());
+            return $response->json()['message_id'];
 
         } catch (\Exception $e) {
-            Log::error('Error while seding sms');
+            
             Log::info($e);
+
+            return false;
         }
     }
 
@@ -49,6 +51,28 @@ class SmsSender
     public function log($text, $phone)
     {
         Log::info($text . ' - Sent to: ' . $this->normalizePhone($phone));
+    }
+
+    /**
+     * Check status of message.
+     *
+     * @param  string $message_id
+     * @return string
+     */
+    public static function status($message_id) {
+
+        try {
+            $response = Http::withBasicAuth(env('SMS_LOGIN'), env('SMS_PASSWORD'))
+                ->get('https://msg.kcell.kz/api/v3/messages/' . $message_id . '?type=system');
+
+            return $response->json()['status'];
+
+        } catch (\Exception $e) {
+            
+            Log::info($e);
+
+            return false;
+        }
     }
 
     /**

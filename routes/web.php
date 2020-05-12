@@ -22,3 +22,8 @@ $router->post('/', [
     'middleware' => 'basic.auth',
     'uses' => 'HomeController@index'
 ]);
+
+$router->get('/status/{message_id}', [
+    'middleware' => 'basic.auth',
+    'uses' => 'HomeController@status'
+]);

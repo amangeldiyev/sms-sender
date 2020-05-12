@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\SmsSender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -28,11 +29,34 @@ class HomeController extends Controller
             ]);
 
             $sender = new SmsSender();
-            $sender->send($request->text, $request->phone);
+            $message_id = $sender->send($request->text, $request->phone);
 
-            return view('form')->with('msg', 'Message sent successfully!');
+            if ($message_id) {
+                return view('form', compact('message_id'));
+            } else {
+                return view('form')->with('error', 'Something went wrong!');
+            }
+
         }
 
         return view('form');
+    }
+
+    public function status($message_id)
+    {
+        $status = SmsSender::status($message_id);
+
+        if (!$status) {
+            abort(400);
+        }
+
+        if ($status == 'D') {
+            $status = 'Delivered';
+        }
+
+        return response()->json([
+            'success' => true,
+            'status' => $status
+        ]);
     }
 }

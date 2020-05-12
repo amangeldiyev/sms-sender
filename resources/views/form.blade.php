@@ -9,24 +9,53 @@
 </head>
 <body>
     <div class="container">
+        <h4 class="text-center mt-4">Send sms</h4>
+        @if (isset($message_id))
+            <div class="alert alert-success" role="alert">
+                SMS sent successfully! Message ID: {{$message_id}}
+                <u style="cursor: pointer" onclick="checkStatus('{{$message_id}}')" class="float-right">Check status</u>
+            </div>
+        @endif
+
+        @if (isset($error))
+            <div class="alert alert-danger" role="alert">
+                {{$error}}
+            </div>
+        @endif
         <form class="mt-4" method="POST">
-            <h4 class="text-center">Send sms</h4>
-            @if (isset($msg))
-                <div class="alert alert-success" role="alert">
-                    {{$msg}}
-                </div>
-            @endif
+
             <div class="form-group">
               <label>Phone number</label>
-              <input name="phone" type="number" class="form-control" aria-describedby="emailHelp" placeholder="Enter phone">
+              <input name="phone" type="number" class="form-control" placeholder="Enter phone">
               <small id="emailHelp" class="form-text text-muted">Format: 77xxxxxxxxx.</small>
             </div>
             <div class="form-group">
               <label>Text</label>
               <textarea name="text" id="" cols="30" rows="10" class="form-control"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Send</button>
         </form>
+
+        <hr>
+        <h4>Check Status</h4>
+        <div class="form-group">
+            <label>Message ID</label>
+            <input type="text" id="message_id" class="form-control" placeholder="Message ID">
+        </div>
+        <button onclick="checkStatus(document.getElementById('message_id').value)" class="btn btn-primary">Check</button>
+
+        <hr>
+        <p class="text-primary" id="message_status"></p>
     </div>
+
+    <script>
+        function checkStatus(message_id) {
+            fetch('/status/' + message_id)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message_status').innerText = message_id + ': ' + data.status
+            });
+        }
+    </script>
 </body>
 </html>
