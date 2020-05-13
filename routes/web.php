@@ -27,3 +27,7 @@ $router->get('/status/{message_id}', [
     'middleware' => 'basic.auth',
     'uses' => 'HomeController@status'
 ]);
+
+$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'middleware' => 'basic.auth'], function () use ($router) {
+    $router->get('logs', 'LogViewerController@index');
+});

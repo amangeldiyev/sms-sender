@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\SmsSender;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
