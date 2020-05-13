@@ -68,7 +68,9 @@ class SmsSender
             $response = Http::withBasicAuth(env('SMS_LOGIN'), env('SMS_PASSWORD'))
                 ->get('https://msg.kcell.kz/api/v3/messages/' . $message_id . '?type=system');
 
-            return $response->json()['status'];
+            Log::info($response->json());
+            
+            return $response->json();
 
         } catch (\Exception $e) {
             

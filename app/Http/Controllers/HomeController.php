@@ -43,11 +43,15 @@ class HomeController extends Controller
 
     public function status($message_id)
     {
-        $status = SmsSender::status($message_id);
-
-        if (!$status) {
+        $result = SmsSender::status($message_id);
+        
+        if (!$result) {
             abort(400);
         }
+
+        $status = $result['status'];
+        $error = $result['error'];
+
 
         switch ($status) {
             case 'D':
@@ -65,11 +69,15 @@ class HomeController extends Controller
             case 'R':
                 $status = 'REJECTED';
                 break;
+            case 'F':
+                $status = 'FAILED';
+                break;
         }
 
         return response()->json([
             'success' => true,
-            'status' => $status
+            'status' => $status,
+            'error' => $error
         ]);
     }
 }

@@ -53,7 +53,14 @@
             fetch('/status/' + message_id)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('message_status').innerText = message_id + ': ' + data.status
+                
+                var text = message_id + ': ' + data.status
+
+                if(data.error) {
+                    text = text + ' (' + data.error + ')'
+                }
+                
+                document.getElementById('message_status').innerText = text
             });
         }
     </script>
