@@ -277,7 +277,7 @@
 <script>
         
   $(document).ready(function () {
-    $('.table-container tr').on('click', function () {
+    $('.table-container tr .text button').on('click', function () {
       $('#' + $(this).data('display')).toggle();
     });
     $('#table-log').DataTable({
