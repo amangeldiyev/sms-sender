@@ -275,24 +275,6 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-
-  // dark mode by https://github.com/coliff/dark-mode-switch
-  const darkSwitch = document.getElementById('darkSwitch');
-
-  // this is here so we can get the body dark mode before the page displays
-  // otherwise the page will be white for a second... 
-  initTheme();
-
-  window.addEventListener('load', () => {
-    if (darkSwitch) {
-      initTheme();
-      darkSwitch.addEventListener('change', () => {
-        resetTheme();
-      });
-    }
-  });
-
-  // end darkmode js
         
   $(document).ready(function () {
     $('.table-container tr').on('click', function () {
