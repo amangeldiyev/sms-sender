@@ -31,6 +31,7 @@ $router->get('/status/{message_id}', [
 ]);
 
 $router->get('/prtg/send', [
+    'middleware' => 'basic.auth',
     'uses' => 'HomeController@send'
 ]);
 
