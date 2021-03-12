@@ -84,11 +84,14 @@ class HomeController extends Controller
         Log::info($request->all());
 
         $sender = new SmsSender();
-        $message_id = $sender->send($request->sitename, 77752784772);
+        $numbers = explode('_', $request->numbers);
+        
+        foreach ($numbers as $number) {
+            $sender->send($request->text, $number);
+        }
 
         return response()->json([
             'success' => true,
-            'message_id' => $message_id
         ]);
     }
 }
