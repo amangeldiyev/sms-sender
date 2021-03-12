@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\SmsSender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -19,9 +20,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
         if ($request->isMethod('POST')) {
-
             $this->validate($request, [
                 'phone' => 'required',
                 'text' => 'required'
@@ -35,7 +34,6 @@ class HomeController extends Controller
             } else {
                 return view('form')->with('error', 'Something went wrong!');
             }
-
         }
 
         return view('form');
@@ -78,6 +76,15 @@ class HomeController extends Controller
             'success' => true,
             'status' => $status,
             'error' => $error
+        ]);
+    }
+
+    public function send(Request $request)
+    {
+        Log::info($request->all());
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

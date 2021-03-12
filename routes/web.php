@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -26,6 +28,10 @@ $router->post('/', [
 $router->get('/status/{message_id}', [
     'middleware' => 'basic.auth',
     'uses' => 'HomeController@status'
+]);
+
+$router->get('/prtg/send', [
+    'uses' => 'HomeController@send'
 ]);
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'middleware' => 'basic.auth'], function () use ($router) {
